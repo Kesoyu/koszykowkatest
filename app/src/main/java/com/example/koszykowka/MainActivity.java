@@ -1,5 +1,6 @@
 package com.example.koszykowka;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -8,10 +9,11 @@ import android.widget.Button;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
-    TextView punktyTextView;
-    Button button_1;
-    Button button_2;
-    Button button_3;
+    private TextView punktyTextView;
+    private Button button_1;
+    private Button button_2;
+    private Button button_3;
+    private Integer punkty=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,6 +22,12 @@ public class MainActivity extends AppCompatActivity {
         button_1=(Button) findViewById(R.id.button3);
         button_2=(Button) findViewById(R.id.button2);
         button_3=(Button) findViewById(R.id.button);
+
+        if(savedInstanceState !=null){
+            punkty = savedInstanceState.getInt("zapisanepunkty");
+            punktyTextView.setText(punkty.toString());
+        }
+
         button_1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -39,7 +47,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("zapisanepunkty", punkty);
+    }
+
     private void zwieksz(int i){
-        
+        punkty+=i;
+        punktyTextView.setText(punkty.toString());
     }
 }
